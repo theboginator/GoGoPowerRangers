@@ -45,8 +45,9 @@ func main() {
 			words = append(words, newbuf...)
 		}
 	}
+	defer 
 
-	fmt.Println("word list:")
+	fmt.Println("\n\nWord list:")
 	// we are iterating only until the value of "pos" because our buffer size
 	// might be more than the number of words because we increase the length by
 	// a constant value. Or the scanner loop might've terminated due to an
