@@ -1,0 +1,47 @@
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"strings"
+)
+func wordCounter(x string) map[string]int {
+	list := strings.Fields(x)
+	count := make(map[string]int)
+	for _, word := range list {
+		_, ok := count[word]
+		if ok {
+			count[word] += 1
+		} else {
+			count[word] = 1
+		}
+	}
+	return count
+}
+/*
+Word Counter function cited from: http://www.golangprograms.com/how-to-count-number-of-repeating-words-in-a-given-string.html
+ */
+
+
+func main() {
+	//Reading User Input
+	var docName string //this variable will hold the name of the .txt file that you want to open
+	fmt.Println("Enter the name of a file you would like to open.\nBe sure to include the .txt at the end of the name.\nExample: SomethingCool.txt")
+	_, err := fmt.Scan(&docName) //scans for the users input
+	file, err := ioutil.ReadFile(docName)
+	str := string(file) // convert file contents to a string
+	if err != nil { //if the file has trouble opening, print the error
+		fmt.Println(err)
+		return
+	}
+	
+	for index, element := range wordCounter(str) {
+		fmt.Println(index, ": ", element)
+	}
+
+	//Create WordCount.txt and write the word count function to it
+
+	//Alerts the user that the file has been saved to such and such file
+	fmt.Println("\n\n The word count has been written to 'WordCount.txt'.")
+
+}
