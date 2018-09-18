@@ -1,0 +1,84 @@
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"strings"
+)
+
+func wordCounter(x string) map[string]int {
+	list := strings.Fields(x)
+	count := make(map[string]int)
+	for _, word := range list {
+		_, ok := count[word]
+		if ok {
+			count[word] += 1
+		} else {
+			count[word] = 1
+		}
+	}
+	return count
+
+}
+
+func main() {
+	//Reading User Input
+	var docName string //this variable will hold the name of the .txt file that you want to open
+	fmt.Println("Enter the name of a file you would like to open.\nBe sure to include the .txt at the end of the name.\nExample: SomethingCool.txt")
+	_, err := fmt.Scan(&docName) //scans for the users input
+
+	file, err := ioutil.ReadFile(docName)
+	str := string(file) // convert file contents to a string
+	if err != nil {
+		fmt.Println(err)
+		return
+
+	}
+	defer //file.Close()
+
+	fmt.Println(str) //Test to see if the file has been turned into a string as needed
+
+	//Now must go through
+	for index, element := range wordCounter(str) {
+		fmt.Println(index, ": ", element)
+	}
+	/*
+	scanner := bufio.NewScanner(file) //error
+	scanner.Split(bufio.ScanWords)
+
+	// initial size of our list of words
+	bufferSize := 100
+	words := make([]string, bufferSize)
+	pos := 0
+
+	for scanner.Scan() {
+		if err := scanner.Err(); err != nil {
+			// This error is a non-EOF error. End the iteration if we encounter0
+			// an error
+			fmt.Println(err)
+			break
+		}
+
+		words[pos] = scanner.Text()
+		pos++
+
+		if pos >= len(words) {
+			// expand the buffer by 100 again
+			newbuf := make([]string, bufferSize)
+			words = append(words, newbuf...)
+		}
+	}
+	defer //After reading through the text, use defer to continue on and print out our list of words
+
+	fmt.Println("\n\nWord list:")
+	// we are iterating only until the value of "pos" because our buffer size
+	// might be more than the number of words because we increase the length by
+	// a constant value. Or the scanner loop might've terminated due to an
+	// error prematurely. In this case the "pos" contains the index of the last
+	// successful update.
+
+	for _, word := range words[:pos] {
+		fmt.Println(word)
+	}
+*/
+}
